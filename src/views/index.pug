@@ -1,15 +1,12 @@
-extends layout
+block content
+  button(id="fetchButton") 取得
+  if albums.length > 0
+    each album in albums
+      p=album.title
+      p=album.artist
+      p=album.price
 
-block content 
-    div(class="ui attached segment")
-      div(class="ui divided items")
-        each album in albums
-          div(class="item")
-            div(class="ui image small")
-              img(src=album.image_url)
-            div(class="content")
-              div(class="header")
-                span(class="album-title")=album.title
-              div(class="meta")
-                span(class="meta-info")=album.artist
-                span(class="meta-info")=album.price
+  script.
+      document.getElementById('fetchButton').addEventListener('click', function() {
+          window.location.href = '/?fetch=true';
+      });

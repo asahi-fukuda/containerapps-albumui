@@ -11,19 +11,42 @@ const api = axios.create({
 });
 
 /* GET home page. */
+// router.get("/", async function (req, res, next) {
+//   try {
+//     console.log("Sending request to backend albums api");
+//     var data = await api.get("/albums");
+//     console.log("Response from backend albums api: ", data.data);
+//     res.render("index", {
+//       albums: data.data,
+//       background_color: background,
+//     });
+//   } catch (err) {
+//     console.log("Error: ", err);
+//     next(err);
+//   }
+// });
+
 router.get("/", async function (req, res, next) {
   try {
-    console.log("Sending request to backend albums api");
-    var data = await api.get("/albums");
-    console.log("Response from backend albums api: ", data.data);
-    res.render("index", {
-      albums: data.data,
-      background_color: background,
-    });
+    if (req.query.fetch === "true") {
+      console.log("Sending request to backend albums api");
+      var data = await api.get("/albums");
+      console.log("Response from backend albums api: ", data.data);
+      res.render("index", {
+        albums: data.data,
+        background_color: background,
+      });
+    } else {
+      res.render("index", {
+        albums: [],
+        background_color: background,
+      });
+    }
   } catch (err) {
     console.log("Error: ", err);
     next(err);
   }
 });
+
 
 module.exports = router;
